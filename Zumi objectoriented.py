@@ -111,58 +111,11 @@ def thirdrdelif(IR, bottomR, bottomL, direction, L, R): #bottomR < 60 and bottom
     IR = zumi.get_all_IR_data()
     L = LR[5]  # left
     R = LR[0]
-
-    #if IR[5] > 190 and (bottomR > 60 or bottomL > 60): #this code should be outdated
-   #     print("hello")
-   #     zumi.turn_left(90)
-   #     direction.append(int(zumi.read_z_angle()))
-   #     zumi.reset_gyro()
-   #     print("direction: " + str(direction))
-   #     print("zumi turn left")
-    #    IR = zumi.get_all_IR_data()
-    #    bottomR = IR[1]
-    #    bottomL = IR[3]
-    #    print()
-   #     if (bottomR < 60 and bottomL < 60):
-   #         print("did I go to far or not far enough?")
-   #         zumi.turn_right(90)
-    #        zumi.forward(2, 0.2)
-    #        zumi.turn_left(90)
-    #        IR = zumi.get_all_IR_data()
-    #        bottomR = IR[1]
-   #         bottomL = IR[3]
-   #         if bottomR < 60 and bottomL < 60:
-   #             print("go back further")
-    #            zumi.turn_right(90)
-   #             zumi.reverse(2, 0.2)
-    #elif IR[0] > 190 and (bottomR > 60 or bottomL > 60):
-    #    print("hello")
-    #    zumi.turn_right(90)
-    #    direction.append(int(zumi.read_z_angle()))
-    #    zumi.reset_gyro()
-    #    print("direction: " + str(direction))
-    #    print("zumi turn left")
-    #    IR = zumi.get_all_IR_data()
-   #     bottomR = IR[1]
-    #    bottomL = IR[3]
-    #    print()
-    #    if (bottomR < 60 and bottomL < 60):
-     #       print("did I go to far or not far enough?")
-     #       zumi.turn_right(90)
-    #        zumi.forward(2, 0.2)
-     #       zumi.turn_left(90)
-       #     IR = zumi.get_all_IR_data()
-       #     bottomR = IR[1]
-      #      bottomL = IR[3]
-      #      if bottomR < 60 and bottomL < 60:
-      #          print("go back further")
-      #          zumi.turn_right(90)
-      #          zumi.reverse(2, 0.2)
     return IR, bottomR, bottomL, L, R, direction
 
 #elif bottomR < 60 and bottomL < 60: #both are off probably in another loop
 def LRoB(IR, bottomR, bottomL, L, R, direction) #zumi needs to turn left right or turn back it was
-    # originaly meant to prevent a specific fail state that might now be obsolet
+    # originaly meant to prevent a specific fail state that might now be obsolet, it is currently unused but I might need parts of it later
     print("last elif: " + str((bottomR <= 60 and bottomL <= 60)))
         if R > 180:
             zumi.turn_right(90)
