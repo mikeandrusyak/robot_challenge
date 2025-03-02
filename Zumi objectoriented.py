@@ -283,7 +283,7 @@ for n in range(0,40):
                 zumi.turn_left(5)
                 print("keep turning l: "+str(bottomL)+ " - "+ str(bottomR)+"  "  +str(bottomL-bottomR ))
         #elif bottomL>90 and bottomR>90:
-            #    print("just some finetuning")
+            #    print("just some finetuning") #the zumi enviroment gives an indent error I can't tell if the tabstopps are off.... 
             #if bottomL-bottomR> 9 and bottomL-bottomR=!0:
            #     zumi.turn_left((bottomL-bottomR)/((bottomL-bottomR))/10)
            # elif bottomR-bottomL> 9 bottomL-bottomR=!0:
