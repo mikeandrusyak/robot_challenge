@@ -9,7 +9,7 @@ def start():
     print(0)
     IR=zumi.get_all_IR_data()
     print("all IR"+ str(IR))
-    direction=[]
+    direction=[0]
     bottomR=IR[1]
     bottomL=IR[3]
     L = IR[5]  # left
