@@ -222,13 +222,22 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
                 elif bottomL-bottomR>20 and bottomL<90 and bottomR<90:#l
                     while bottomL-bottomR>30:
                         zumi.turn_left(5)
+                        IR=zumi.get_all_IR_data()
+                        bottomR=IR[1]
+                        bottomL=IR[3]
                         print("keep turning l: "+str(bottomL)+ " - "+ str(bottomR)+"  "  +str(bottomL-bottomR ))
                 elif bottomL>90 and bottomR>90:
                     print("just some finetuning")
                     if bottomL-bottomR> 9 and bottomL-bottomR!=0:
                         zumi.turn_left(5)
+                        IR=zumi.get_all_IR_data()
+                        bottomR=IR[1]
+                        bottomL=IR[3]
                     elif bottomR-bottomL> 9 and bottomL-bottomR!=0:
                         zumi.turn_left(5)
+                        IR=zumi.get_all_IR_data()
+                        bottomR=IR[1]
+                        bottomL=IR[3]
         if bottomR > 80 and bottomL < 80:# zumi continue if slightly of track to the left            
             direction.append(int(zumi.read_z_angle()))           
             zumi.turn_right(5)
