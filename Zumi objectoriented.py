@@ -4,7 +4,7 @@ from zumi.util.screen import Screen
 import csv
 zumi= Zumi()
 screen= Screen(x)
-def writelog():
+def writelog(x):
     with open('drivelog.csv', 'w', newline='') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=',',
                             quotechar='|', quoting=csv.QUOTE_MINIMAL)
