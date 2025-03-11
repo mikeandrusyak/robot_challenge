@@ -1,9 +1,17 @@
 from zumi.zumi import Zumi
 import time
 from zumi.util.screen import Screen
-
+import csv
 zumi= Zumi()
-screen= Screen()
+screen= Screen(x)
+def writelog():
+    with open('drivelog.csv', 'w', newline='') as csvfile:
+        spamwriter = csv.writer(csvfile, delimiter=',',
+                            quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        spamwriter.writerow(x)
+        
+
+
 def start():
     print("start")
     print(0)
