@@ -23,7 +23,7 @@ def start():
     return IR, bottomR, bottomL, L, R , direction
 
 def zumi_get_IR():
-    IR, bottomR, bottomL, L, R=zumi.get_all_IR_data()()
+    IR, bottomR, bottomL, L, R=zumi.get_all_IR_data()
     return IR, bottomR, bottomL, L, R
 
 def firstif(IR, bottomR, bottomL, L, R, direction): # bottomR >=80 and bottomL>=80
