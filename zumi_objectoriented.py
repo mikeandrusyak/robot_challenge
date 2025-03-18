@@ -3,7 +3,7 @@ import time
 from zumi.util.screen import Screen
 import csv
 zumi= Zumi()
-screen= Screen(x)
+screen= Screen()
 def writelog(x):
     with open('drivelog.csv', 'w', newline='') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=',',
@@ -15,23 +15,24 @@ def writelog(x):
 def start():
     print("start")
     print(0)
+    drivelog=[]
     IR, bottomR, bottomL, L, R=zumi_get_IR()
     print("all IR"+ str(IR))
     direction=[0]
     #print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
     print("first if: "+str((bottomR >=80 and bottomL>=80)))
-    return IR, bottomR, bottomL, L, R , direction
+    return IR, bottomR, bottomL, L, R, direction, drivelog
 
 def zumi_get_IR():
-    IR, bottomR, bottomL, L, R=zumi.get_all_IR_data()
+    IR, bottomR, bottomL, L, R, direction=zumi.get_all_IR_data()
     return IR, bottomR, bottomL, L, R
 
-def firstif(IR, bottomR, bottomL, L, R, direction): # bottomR >=80 and bottomL>=80
+def firstif(IR, bottomR, bottomL, L, R, direction, drivelog): # bottomR >=80 and bottomL>=80
     print("firstif")
     print("zumi move forward")
     zumi.reset_gyro()
     zumi.forward(11, 0.5) #dist 1 ca. 2-5cm
-    direction.append(int((zumi.read_z_angle(),"5cm" )))
+    drivelog.append((zumi.read_z_angle(),"5cm" ))
     IR, bottomR, bottomL, L, R=zumi_get_IR()
     print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
     #print("direction: " + str(direction))
@@ -62,14 +63,14 @@ def firstif(IR, bottomR, bottomL, L, R, direction): # bottomR >=80 and bottomL>=
                 zumi.turn_right(5)
                 zumi.signal_right_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
-    return IR, bottomR, bottomL, L, R, direction
+    return IR, bottomR, bottomL, L, R, direction, drivelog
 
-def firstif(IR, bottomR, bottomL, L, R, direction): # bottomR >=80 and bottomL>=80
+def firstif(IR, bottomR, bottomL, L, R, direction, drivelog): # bottomR >=80 and bottomL>=80
     print("firstif")
     print("zumi move forward")
     zumi.reset_gyro()
     zumi.forward(11, 0.5)
-    direction.append(int((zumi.read_z_angle(),"5cm" )))
+    drivelog.append((zumi.read_z_angle(),"5cm" ))
     IR, bottomR, bottomL, L, R=zumi_get_IR()
     print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
     #print("direction: " + str(direction))
@@ -100,7 +101,7 @@ def firstif(IR, bottomR, bottomL, L, R, direction): # bottomR >=80 and bottomL>=
                 zumi.turn_right(5)
                 zumi.signal_on_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
-    return IR, bottomR, bottomL, L, R, direction
+    return IR, bottomR, bottomL, L, R, direction, drivelog
 
 
 def secondelif(IR, bottomR, bottomL, L, R, direction): #bottomR > 65 and bottomL<65
@@ -117,7 +118,7 @@ def secondelif(IR, bottomR, bottomL, L, R, direction): #bottomR > 65 and bottomL
         IR, bottomR, bottomL, L, R=zumi_get_IR()
         print(bottomR, bottomL)
         zumi.forward(9, 0.4)#dist 2 ca. 2 cm
-        direction.append(int((zumi.read_z_angle(),"2cm" ))))
+        drivelog.append((zumi.read_z_angle(),"2cm" ))
         time.sleep(0.1)
         print("forward again, secondelif")
         IR, bottomR, bottomL, L, R=zumi_get_IR()
@@ -132,7 +133,7 @@ def secondelif(IR, bottomR, bottomL, L, R, direction): #bottomR > 65 and bottomL
                 zumi.turn_right(5)
                 zumi.signal_right_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
-    return IR, bottomR, bottomL, L, R, direction
+    return IR, bottomR, bottomL, L, R, direction, drivelog
 
 
 def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL<60
@@ -172,7 +173,7 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
                 if bottomR > 80 or bottomL > 80:
                     print("Your still on track, you should not be if you're at a curve")
                     zumi.forward(9, 0.4)
-                    direction.append(int((zumi.read_z_angle(),"2cm" )))
+                    drivelog.append((zumi.read_z_angle(),"2cm" ))
                     time.sleep(0.1)
                     direction.append(int(zumi.read_z_angle()))
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
@@ -190,7 +191,7 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
                     print("zumi turn back")
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
                 zumi.reset_gyro()
-                return IR, bottomR, bottomL, L, R, direction
+                return IR, bottomR, bottomL, L, R, direction, drivelog
             elif bottomL >90  and bottomR<90:
                 while bottomL>=90 and bottomR <=90:
                     zumi.signal_left_on()
@@ -241,41 +242,41 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
             zumi.turn_right(5)
             while bottomR < 70 and bottomL > 70:
                 zumi.forward(2, 0.2)#dist 3 ca 1 cm
-                direction.append(int((zumi.read_z_angle(),"1cm" )))
+                drivelog.append((zumi.read_z_angle(),"1cm" ))
                 time.sleep(0.1)
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
             direction.append(int(zumi.read_z_angle()))
             zumi.turn_left(3)
-            IR, bottomR, bottomL, L, R=zumi_get_IR()]
+            IR, bottomR, bottomL, L, R=zumi_get_IR()
             print(bottomR,bottomL)
-            return IR, bottomR, bottomL, L, R, direction
+            return IR, bottomR, bottomL, L, R, direction, drivelog
         elif bottomR < 80 and bottomL > 80:#should zumi continue if slightly of track to the right
             direction.append(int(zumi.read_z_angle()))
             IR=zumi.get_all_IR_data()
             zumi.turn_left(5)
             while bottomR < 70 and bottomL > 70:
                 zumi.forward(2, 0.2)
-                direction.append(int((zumi.read_z_angle(),"1cm" )))
+                drivelog.append((zumi.read_z_angle(),"1cm" ))
                 time.sleep(0.1)
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
             zumi.turn_right(3)
             IR, bottomR, bottomL, L, R=zumi_get_IR()
             print(bottomR,bottomL)
-            return IR, bottomR, bottomL, L, R, direction
+            return IR, bottomR, bottomL, L, R, direction, drivelog
         elif bottomR > 80 and bottomL > 80: # on track
             print("on track")
             zumi.forward(2, 0.2)
-            direction.append(int((zumi.read_z_angle(),"1cm" )))
+            drivelog.append((zumi.read_z_angle(),"1cm" ))
             time.sleep(0.1)
             direction.append(int(zumi.read_z_angle()))
             IR, bottomR, bottomL, L, R=zumi_get_IR()
-            return IR, bottomR, bottomL, L, R, direction
+            return IR, bottomR, bottomL, L, R, direction, drivelog
         elif bottomR < 80 and bottomL <80: #
             zumi.signal_left_on()
             zumi.turn_left(90)
             zumi.signal_left_off()
             IR, bottomR, bottomL, L, R=zumi_get_IR()
-            return IR, bottomR, bottomL, L, R, direction
+            return IR, bottomR, bottomL, L, R, direction, drivelog
         elif bottomL in range(60, 79) and bottomR< 60:
             print("didn't catch the curve left")
             while bottomL<80 and bottomR < 80:
@@ -294,7 +295,7 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
     print("exiting 3rd if ************************")
     IR, bottomR, bottomL, L, R=zumi_get_IR()
     zumi.reset_gyro()
-    return IR, bottomR, bottomL, L, R, direction
+    return IR, bottomR, bottomL, L, R, direction, drivelog
 
 
 
@@ -311,12 +312,12 @@ def Zumi_go(speed, Test):#add variable speed for speed and duration in all zumi.
     zumi.reset_gyro()
     direction=[0]
     direction.append(int(zumi.read_z_angle()))
-    IR, bottomR, bottomL, L, R, direction=start()
+    IR, bottomR, bottomL, L, R, direction, drivelog=start()
     for n in range(0,30):
         print(n)
         print("for loop: IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
         if (bottomR >=80 and bottomL>=80):
-            IR, bottomR, bottomL, L, R, direction= firstif(IR, bottomR, bottomL, L, R, direction)
+            IR, bottomR, bottomL, L, R, direction, drivelog= firstif(IR, bottomR, bottomL, L, R, direction, drivelog)
         elif bottomR < 65 and bottomL>65 and bottomL<79:
             if n< 5:
                 print("couldn't walk straigth")
@@ -328,7 +329,7 @@ def Zumi_go(speed, Test):#add variable speed for speed and duration in all zumi.
             else:
                 print("WTF")
                 print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
-                IR, bottomR, bottomL, L, R, direction=firstelif(IR, bottomR, bottomL, L, R, direction)
+                IR, bottomR, bottomL, L, R, direction, drivelog=firstelif(IR, bottomR, bottomL, L, R, direction, drivelog)
         elif bottomR > 65 and bottomL<65 and bottomR<79:
             if n< 5:
                 print("couldn't walk straigth**************")
@@ -339,10 +340,10 @@ def Zumi_go(speed, Test):#add variable speed for speed and duration in all zumi.
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
             else:
                 print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
-                IR, bottomR, bottomL, L, R, direction=secondelif(IR, bottomR, bottomL, L, R, direction)
+                IR, bottomR, bottomL, L, R, direction, drivelog=secondelif(IR, bottomR, bottomL, L, R, direction, drivelog)
         elif bottomR < 65 and bottomL<65:
             #print(IR, bottomR, bottomL, L, R, direction)
-            IR, bottomR, bottomL, L, R, direction=thirdrdelif(IR, bottomR, bottomL, L, R, direction)
+            IR, bottomR, bottomL, L, R, direction, drivelog=thirdrdelif(IR, bottomR, bottomL, L, R, direction, drivelog)
         else:
             print("nothing")
             print("What happened: IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
@@ -385,6 +386,17 @@ def Zumi_go(speed, Test):#add variable speed for speed and duration in all zumi.
         print(zumi.get_all_IR_data())
 
 Zumi_go(1,False)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
