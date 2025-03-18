@@ -104,7 +104,7 @@ def firstif(IR, bottomR, bottomL, L, R, direction, drivelog): # bottomR >=80 and
     return IR, bottomR, bottomL, L, R, direction, drivelog
 
 
-def secondelif(IR, bottomR, bottomL, L, R, direction): #bottomR > 65 and bottomL<65
+def secondelif(IR, bottomR, bottomL, L, R, direction, drivelog): #bottomR > 65 and bottomL<65
     print( "2nd elif")
     zumi.signal_right_on()
     zumi.turn_right(90)
@@ -136,7 +136,7 @@ def secondelif(IR, bottomR, bottomL, L, R, direction): #bottomR > 65 and bottomL
     return IR, bottomR, bottomL, L, R, direction, drivelog
 
 
-def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL<60
+def thirdrdelif(IR, bottomR, bottomL, L, R, direction, drivelog):#bottomR < 60 and bottomL<60
     print("3rd elif")
     print(R)
     if 1==1: # if it is not clear in which direction to go
