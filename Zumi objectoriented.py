@@ -21,15 +21,17 @@ def start():
     #print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
     print("first if: "+str((bottomR >=80 and bottomL>=80)))
     return IR, bottomR, bottomL, L, R , direction
+
 def zumi_get_IR():
-    IR, bottomR, bottomL, L, R=zumi_get_IR()
+    IR, bottomR, bottomL, L, R=zumi.get_all_IR_data()()
     return IR, bottomR, bottomL, L, R
+
 def firstif(IR, bottomR, bottomL, L, R, direction): # bottomR >=80 and bottomL>=80
     print("firstif")
     print("zumi move forward")
     zumi.reset_gyro()
-    zumi.forward(11, 0.5)
-    direction.append(int(zumi.read_z_angle()))
+    zumi.forward(11, 0.5) #dist 1 ca. 2-5cm
+    direction.append(int((zumi.read_z_angle(),"5cm" )))
     IR, bottomR, bottomL, L, R=zumi_get_IR()
     print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
     #print("direction: " + str(direction))
@@ -50,15 +52,15 @@ def firstif(IR, bottomR, bottomL, L, R, direction): # bottomR >=80 and bottomL>=
         print("first if: offtrack")
         if bottomR<80 and bottomL>85:
             while bottomR>=95 and bottomL>95:
-                signal_left_on()
+                zumi.signal_left_on()
                 zumi.turn_left(5)
-                signal_left_off()
+                zumi.signal_left_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
         elif bottomL<=80 and bottomR>=85:
             while bottomR>95 and bottomL<=95:
-                signal_right_on()
+                zumi.signal_right_on()
                 zumi.turn_right(5)
-                signal_right_off()
+                zumi.signal_right_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
     return IR, bottomR, bottomL, L, R, direction
 
@@ -67,7 +69,7 @@ def firstif(IR, bottomR, bottomL, L, R, direction): # bottomR >=80 and bottomL>=
     print("zumi move forward")
     zumi.reset_gyro()
     zumi.forward(11, 0.5)
-    direction.append(int(zumi.read_z_angle()))
+    direction.append(int((zumi.read_z_angle(),"5cm" )))
     IR, bottomR, bottomL, L, R=zumi_get_IR()
     print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
     #print("direction: " + str(direction))
@@ -88,24 +90,24 @@ def firstif(IR, bottomR, bottomL, L, R, direction): # bottomR >=80 and bottomL>=
         print("first if: offtrack")
         if bottomR<80 and bottomL>85:
             while bottomR>=95 and bottomL>95:
-                signal_left_on()
+                zumi.signal_left_on()
                 zumi.turn_left(5)
-                signal_left_off()
+                zumi.signal_left_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
         elif bottomL<=80 and bottomR>=85:
             while bottomR>95 and bottomL<=95:
-                signal_right_on()
+                zumi.signal_right_on()
                 zumi.turn_right(5)
-                signal_on_off()
+                zumi.signal_on_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
     return IR, bottomR, bottomL, L, R, direction
 
 
 def secondelif(IR, bottomR, bottomL, L, R, direction): #bottomR > 65 and bottomL<65
     print( "2nd elif")
-    signal_right_on()
+    zumi.signal_right_on()
     zumi.turn_right(90)
-    signal_right_off()
+    zumi.signal_right_off()
     IR, bottomR, bottomL, L, R=zumi_get_IR()
     if  bottomR>55 and bottomL >55:
         print(" zumi turn right")
@@ -114,20 +116,21 @@ def secondelif(IR, bottomR, bottomL, L, R, direction): #bottomR > 65 and bottomL
         #print("direction: " + str(direction))    
         IR, bottomR, bottomL, L, R=zumi_get_IR()
         print(bottomR, bottomL)
-        zumi.forward(9, 0.4)
+        zumi.forward(9, 0.4)#dist 2 ca. 2 cm
+        direction.append(int((zumi.read_z_angle(),"2cm" ))))
         time.sleep(0.1)
         print("forward again, secondelif")
         IR, bottomR, bottomL, L, R=zumi_get_IR()
         print(bottomR, bottomL)
     else:
         print("shouldn't made a turn here")
-        signal_left_on()
+        zumi.signal_left_on()
         zumi.turn_left(90)
-        signal_left_off()
+        zumi.signal_left_off()
         while bottomR>=85 and bottomL <=85:
-                signal_right_on()
+                zumi.signal_right_on()
                 zumi.turn_right(5)
-                signal_right_off()
+                zumi.signal_right_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
     return IR, bottomR, bottomL, L, R, direction
 
@@ -136,39 +139,40 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
     print("3rd elif")
     print(R)
     if 1==1: # if it is not clear in which direction to go
-        signal_right_on()
+        zumi.signal_right_on()
         zumi.turn_right(90)
-        signal_right_off()
+        zumi.signal_right_off()
         print("looking right")
         IR, bottomR, bottomL, L, R=zumi_get_IR()
         print("rl: IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
         if bottomR < 80 and bottomL < 80:# wrong direction
             print("wrong direction")
             t1=zumi.read_z_angle()
-            signal_left_on()
+            zumi.signal_left_on()
             zumi.turn_left(180)
-            signal_left_off()
+            zumi.signal_left_off()
             t2=zumi.read_z_angle()
             print (abs(t1-t2))
             if abs(t1-t2)< 170:
                 print("why wasn't that a full turn?")
-                signal_left_on()
+                zumi.signal_left_on()
                 zumi.turn_left(180-abs(t1-t2))
-                signal_left_off()
+                zumi.signal_left_off()
             print("looking left")
             IR, bottomR, bottomL, L, R=zumi_get_IR()
             print("ll: IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
             print(bottomR < 65 and bottomL < 65)
             if bottomR < 65 and bottomL < 65:# are we right now?
-                signal_right_on()
+                zumi.signal_right_on()
                 zumi.turn_right(90)
-                signal_right_on()
+                zumi.signal_right_on()
                 print("nope")
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
                 print("d IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
                 if bottomR > 80 or bottomL > 80:
                     print("Your still on track, you should not be if you're at a curve")
                     zumi.forward(9, 0.4)
+                    direction.append(int((zumi.read_z_angle(),"2cm" )))
                     time.sleep(0.1)
                     direction.append(int(zumi.read_z_angle()))
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
@@ -189,9 +193,9 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
                 return IR, bottomR, bottomL, L, R, direction
             elif bottomL >90  and bottomR<90:
                 while bottomL>=90 and bottomR <=90:
-                    signal_left_on()
+                    zumi.signal_left_on()
                     zumi.turn_left(5)
-                    signal_left_off()
+                    zumi.signal_left_off()
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
                     print("keep turning r: "+str(bottomL)+ " - "+ str(bottomR)+"  "   +str(bottomL-bottomR ))
             else: #atleast partially on track
@@ -200,43 +204,44 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
                 if (bottomL in range(89,55) or bottomR in range(89,55)) and (bottomL<90 or bottomR<90):#l bottomL-bottomR<20
                     if bottomL>bottomR:
                         while bottomL>=90 and bottomR <=90:
-                            signal_left_on()
+                            zumi.signal_left_on()
                             zumi.turn_left(5)
-                            signal_left_off()
+                            zumi.signal_left_off()
                             IR, bottomR, bottomL, L, R=zumi_get_IR()
                             print("keep turning r: "+str(bottomL)+ " - "+ str(bottomR)+"  "   +str(bottomL-bottomR ))
                     elif bottomR>bottomL:
                         while bottomR>=90 and bottomL <=90:
-                            signal_right_on()
+                            zumi.signal_right_on()
                             zumi.turn_right(5)
-                            signal_right_off()
+                            zumi.signal_right_off()
                             IR, bottomR, bottomL, L, R=zumi_get_IR()
                             print("keep turning r: "+str(bottomL)+ " - "+ str(bottomR)+"  "   +str(bottomL-bottomR ))
                 elif bottomL-bottomR>20 and bottomL<90 and bottomR<90:#l
                     while bottomL-bottomR>30:
-                        signal_left_on()
+                        zumi.signal_left_on()
                         zumi.turn_left(5)
-                        signal_left_off()
+                        zumi.signal_left_off()
                         IR, bottomR, bottomL, L, R=zumi_get_IR()
                         print("keep turning l: "+str(bottomL)+ " - "+ str(bottomR)+"  "  +str(bottomL-bottomR ))
                 elif bottomL>90 and bottomR>90:
                     print("just some finetuning")
                     if bottomL-bottomR> 9 and bottomL-bottomR!=0:
-                        signal_left_on()
+                        zumi.signal_left_on()
                         zumi.turn_left(5)
-                        signal_left_off()
+                        zumi.signal_left_off()
                         IR, bottomR, bottomL, L, R=zumi_get_IR()
                     elif bottomR-bottomL> 9 and bottomL-bottomR!=0:
-                        signal_left_on()
+                        zumi.signal_left_on()
                         zumi.turn_left(5)
-                        signal_left_off()
+                        zumi.signal_left_off()
                         IR, bottomR, bottomL, L, R=zumi_get_IR()
         if bottomR > 80 and bottomL < 80:# zumi continue if slightly of track to the left            
             direction.append(int(zumi.read_z_angle()))  
             
             zumi.turn_right(5)
             while bottomR < 70 and bottomL > 70:
-                zumi.forward(2, 0.2)
+                zumi.forward(2, 0.2)#dist 3 ca 1 cm
+                direction.append(int((zumi.read_z_angle(),"1cm" )))
                 time.sleep(0.1)
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
             direction.append(int(zumi.read_z_angle()))
@@ -250,6 +255,7 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
             zumi.turn_left(5)
             while bottomR < 70 and bottomL > 70:
                 zumi.forward(2, 0.2)
+                direction.append(int((zumi.read_z_angle(),"1cm" )))
                 time.sleep(0.1)
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
             zumi.turn_right(3)
@@ -259,29 +265,30 @@ def thirdrdelif(IR, bottomR, bottomL, L, R, direction):#bottomR < 60 and bottomL
         elif bottomR > 80 and bottomL > 80: # on track
             print("on track")
             zumi.forward(2, 0.2)
+            direction.append(int((zumi.read_z_angle(),"1cm" )))
             time.sleep(0.1)
             direction.append(int(zumi.read_z_angle()))
             IR, bottomR, bottomL, L, R=zumi_get_IR()
             return IR, bottomR, bottomL, L, R, direction
         elif bottomR < 80 and bottomL <80: #
-            signal_left_on()
+            zumi.signal_left_on()
             zumi.turn_left(90)
-            signal_left_off()
+            zumi.signal_left_off()
             IR, bottomR, bottomL, L, R=zumi_get_IR()
             return IR, bottomR, bottomL, L, R, direction
         elif bottomL in range(60, 79) and bottomR< 60:
             print("didn't catch the curve left")
             while bottomL<80 and bottomR < 80:
                 print("didn't catch the curve left")
-                signal_left_on()
+                zumi.signal_left_on()
                 zumi.turn_left(5)
-                signal_left_off()
+                zumi.signal_left_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
         elif bottomR in range(60, 79) and bottomL< 60:
             while bottomR<80 and bottomL < 80:
-                signal_right_on()
+                zumi.signal_right_on()
                 zumi.turn_right(5)
-                signal_right_off()
+                zumi.signal_right_off()
                 IR, bottomR, bottomL, L, R=zumi_get_IR()
         print("zumi go back")
     print("exiting 3rd if ************************")
@@ -314,9 +321,9 @@ def Zumi_go(speed, Test):#add variable speed for speed and duration in all zumi.
             if n< 5:
                 print("couldn't walk straigth")
                 while bottomR<=65:
-                    signal_right_on()
+                    zumi.signal_right_on()
                     zumi.turn_right(5)
-                    signal_right_off()
+                    zumi.signal_right_off()
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
             else:
                 print("WTF")
@@ -326,9 +333,9 @@ def Zumi_go(speed, Test):#add variable speed for speed and duration in all zumi.
             if n< 5:
                 print("couldn't walk straigth**************")
                 while bottomL<=65:
-                    signal_left_on()
+                    zumi.signal_left_on()
                     zumi.turn_left(5)
-                    signal_left_off()
+                    zumi.signal_left_off()
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
             else:
                 print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
@@ -343,27 +350,27 @@ def Zumi_go(speed, Test):#add variable speed for speed and duration in all zumi.
             print("and now?: IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
             if bottomL>80 and bottomR<80:
                 while (bottomL<=95 and bottomR <=95) or (bottomL>=80 and bottomR<=95):
-                    signal_left_on()
+                    zumi.signal_left_on()
                     zumi.turn_left(5)
-                    signal_left_off()
+                    zumi.signal_left_off()
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
             if bottomR>80 and bottomL<80:
                 while (bottomL<=95 and bottomR <=95)or (bottomR>=80 and bottomL<=95):
-                    signal_right_on()
+                    zumi.signal_right_on()
                     zumi.turn_right(5)
-                    signal_right_off()
+                    zumi.signal_right_off()
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
             if bottomL<80 and bottomR<80:#l
                 while bottomL>bottomR and bottomL<=80 and bottomR<=80:
-                    signal_left_on()
+                    zumi.signal_left_on()
                     zumi.turn_left(5)
-                    signal_left_off()
+                    zumi.signal_left_off()
                     print("keep turning r: "+str(bottomL)+ " - "+ str(bottomR)+"  "   +str(bottomL-bottomR ))
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
                 while bottomR>bottomL and bottomL<=80 and bottomR<=80:
-                    signal_right_on()
+                    zumi.signal_right_on()
                     zumi.turn_right(5)
-                    signal_right_off()
+                    zumi.signal_right_off()
                     IR, bottomR, bottomL, L, R=zumi_get_IR()
                     print("keep turning r: "+str(bottomL)+ " - "+ str(bottomR)+"  "   +str(bottomL-bottomR ))
 
