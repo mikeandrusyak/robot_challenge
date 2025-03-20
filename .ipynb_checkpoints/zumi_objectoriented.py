@@ -329,7 +329,7 @@ def Zumi_go(speed, Test):#add variable speed for speed and duration in all zumi.
             else:
                 print("WTF")
                 print("IR_0(R): "+str(bottomR)+" , "+"IR_3(L): " +str(bottomL))
-                IR, bottomR, bottomL, L, R, direction, drivelog=firstelif(IR, bottomR, bottomL, L, R, direction, drivelog)
+                IR, bottomR, bottomL, L, R, direction, drivelog=firstif(IR, bottomR, bottomL, L, R, direction, drivelog)
         elif bottomR > 65 and bottomL<65 and bottomR<79:
             if n< 5:
                 print("couldn't walk straigth**************")

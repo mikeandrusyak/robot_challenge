@@ -1,3 +1,10 @@
+from zumi.zumi import Zumi
+import time
+from zumi.util.screen import Screen
+import csv
+zumi= Zumi()
+screen= Screen()
+
 print(zumi.get_all_IR_data())
 #zumi.mpu.calibrate_MPU()
 zumi.reset_gyro()
