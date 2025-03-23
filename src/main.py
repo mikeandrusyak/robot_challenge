@@ -4,12 +4,56 @@ from zumi.util.vision import Vision
 from zumi.util.camera import Camera
 from zumi.personality import Personality
 import time
+from datetime import datetime
 
 zumi = Zumi()
 camera = Camera()
 vision = Vision()
 screen = Screen()
 personality = Personality(zumi, screen)
+
+number_of_objects = 0
+log = {}
+
+def line_correction(bottom_left, bottom_right, desired_angle, threshold):
+    if bottom_left > threshold and bottom_right < threshold:
+        desired_angle +=5
+    elif bottom_left < threshold and bottom_right > threshold:
+        desired_angle -=5
+    return desired_angle
+
+def turning_correction(desired_angle, turn_angle):
+    if desired_angle >= -turn_angle if desired_angle<0 else turn_angle:
+        desired_angle = -abs(turn_angle-abs(desired_angle))
+    else:
+        desired_angle = abs(turn_angle-abs(desired_angle))
+    return desired_angle
+
+def turn_to_check(turn):
+    zumi.reset_gyro()
+    if turn == 'left':
+        zumi.turn_left(90)
+    elif turn == 'right':
+        zumi.turn_right(180)
+    time.sleep(0.01)
+    desired_angle = zumi.read_z_angle()
+    return desired_angle
+
+def move_after_turning(speed, desired_angle):
+    zumi.reset_gyro() 
+    for x in range(3):
+        zumi.go_straight(speed, desired_angle)
+
+def object_detected(threshold=100):
+    front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data() # Get center IR sensor value
+    
+    return front_right < threshold and front_left < threshold
+
+def log_event(action):
+    timestamp = datetime.now()
+    log[action] = log.setdefault(action, [])
+    log[action].append(timestamp)
+    print(log)
 
 def qr_code_command(message):
     if message == "Left Circle":
@@ -43,27 +87,98 @@ def read_qr_code():
     message = vision.get_QR_message(qr_code)
     qr_code_command(message)
 
-if __name__ == "__main__":
-    while True:
-        # Отримання даних з усіх ІЧ-сенсорів
-        front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data()
-        
-        # Налаштування порогу (чим менше значення, тим ближче об'єкт)
-        threshold = 100 
-        speed = 0.5
-        # Логіка для виявлення можливих шляхів
+def line_correction(bottom_left, bottom_right, desired_angle, threshold):
+    if bottom_left > threshold and bottom_right < threshold:
+        desired_angle +=5
+    elif bottom_left < threshold and bottom_right > threshold:
+        desired_angle -=5
+    return desired_angle
 
-        if bottom_left > threshold and bottom_right > threshold:
-            zumi.line_follower(speed)
+def turning_correction(desired_angle, turn_angle):
+    if desired_angle >= -turn_angle if desired_angle<0 else turn_angle:
+        desired_angle = -abs(turn_angle-abs(desired_angle))
+    else:
+        desired_angle = abs(turn_angle-abs(desired_angle))
+    return desired_angle
+
+def turn_to_check(turn):
+    zumi.reset_gyro()
+    if turn == 'left':
+        zumi.turn_left(90)
+    elif turn == 'right':
+        zumi.turn_right(180)
+    time.sleep(0.01)
+    desired_angle = zumi.read_z_angle()
+    return desired_angle
+
+def move_after_turning(speed, desired_angle):
+    zumi.reset_gyro() 
+    for x in range(3):
+        zumi.go_straight(speed, desired_angle)
+
+zumi.mpu.calibrate_MPU()
+zumi.reset_gyro()
+desired_angle = zumi.read_z_angle() 
+
+log_event('start')
+log_event('end_line')
+try:
+    while True:
+        # Set the threshold for the IR sensors and the speed
+        threshold = 50 
+        speed = 5
+
+        if object_detected():
+            log_event('object_detected')
+            while object_detected():
+                zumi.stop()
+                time.sleep(0.1)
+            number_of_objects += 1
+
+        # Read all IR sensor values
+        front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data()
+
+        # Correction to line if one sensor is on the line and the other is off
+        desired_angle = line_correction(bottom_left, bottom_right, desired_angle, threshold)
+
+        # Move forward with the corrected heading
+        if bottom_left > threshold or bottom_right > threshold:
+            zumi.go_straight(speed, desired_angle)
         else:
-            zumi.turn_left(90)
-            front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data()
-            if bottom_left > threshold and bottom_right > threshold:
-                zumi.line_follower(speed)
-            else:
-                zumi.turn_right(180)
+            log_event('end_line')
+            
+            if (log['end_line'][-1] - log['end_line'][-2]).total_seconds() > 3:
+                go_left = True
+            
+                log_event('check_left')
+                # Turn to check if left is line
+                turned_left_angle = turn_to_check('left')
+
+                # Calculate angle if turn was too much or not enough
+                desired_angle = turning_correction(turned_left_angle, 90)
+
                 front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data()
-                if bottom_left < threshold or bottom_right < threshold:
+            else:
+                go_left = False
+            if bottom_left > threshold and bottom_right > threshold and go_left:
+                log_event('move_left')
+                move_after_turning(speed, desired_angle)
+            else:
+                
+                log_event('check_right')
+                # Turn to check if right is line
+                turned_right_angle = turn_to_check('right') 
+                
+                # Calculate angle if turn was too much or not enough
+                desired_angle = turning_correction(turned_right_angle, 180)
+
+                front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data()
+
+                if bottom_left > threshold and bottom_right > threshold:
+                    log_event('move_right')
+                    move_after_turning(speed, desired_angle)
+                else:
                     zumi.stop()
                     break
-
+finally:
+    zumi.stop()
