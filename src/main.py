@@ -88,6 +88,7 @@ def read_qr_code():
     qr_code = vision.find_QR_code(frame)
     message = vision.get_QR_message(qr_code)
     qr_code_command(message)
+    return message
 
 def line_correction(bottom_left, bottom_right, desired_angle, threshold):
     if bottom_left > threshold and bottom_right < threshold:
@@ -148,8 +149,11 @@ try:
             while object_detected():
                 zumi.stop()
                 time.sleep(0.1)
+            log_event('object_removed')
             print("Object removed. Resuming movement.")
-            read_qr_code()
+            log_event('qr_code_read')
+            message = read_qr_code()
+            log_event('qr_code_command: ' + message + " done")
             
 
         # Read all IR sensor values
