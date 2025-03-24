@@ -1,6 +1,7 @@
-# import libraries
 from zumi.zumi import Zumi
+from zumi.protocol import Note # allows Zumi to play notes (music)
 import time
+
 
 zumi = Zumi()
 
@@ -35,9 +36,12 @@ zumi.stop()
 ##########################################################################################
 
 # Advanced Object Detection, Stop and Count Objects
+# Plays note when an object is detected 
 
 from zumi.zumi import Zumi
 from zumi.util.screen import Screen  # Import screen module
+from zumi.protocol import Note # allows Zumi to play notes (music)
+import time
 
 zumi = Zumi()
 screen = Screen()
@@ -62,6 +66,7 @@ screen.draw_text_center("Objects: {object_count}")  # Display initial count
 while True:
     if object_detected():
         print("Object detected ahead! Stopping.")
+        zumi.play_note(13, 500) # 13 is note type (1 - 60), 500 is duration in ms
         zumi.stop()
         object_count += 1  # Increase object counter by 1
         screen.draw_text_center(f"Objects: {object_count}") # Display object count on screen     
@@ -69,7 +74,6 @@ while True:
         print("Waiting for object to be removed...")
         while object_detected():
             time.sleep(0.5)  # Check every 0.5s
-        
         print("Object removed. Resuming movement.")
     
     zumi.forward()
