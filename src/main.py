@@ -61,7 +61,7 @@ def qr_code_command(message, number_of_objects):
     if message == "Left Circle":
         for j in range(number_of_objects):
             for i in range(4):
-                turn_to_check('left')
+                zumi.turn_right(90)
                 zumi.line_follower(3)
     elif message == "Right Circle":
         for j in range(number_of_objects):
