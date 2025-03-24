@@ -3,6 +3,8 @@ from zumi.util.screen import Screen
 from zumi.util.vision import Vision 
 from zumi.util.camera import Camera
 from zumi.personality import Personality
+from zumi.protocol import Note # Note allows Zumi to play notes (music)
+
 import time
 from datetime import datetime
 
@@ -116,6 +118,14 @@ def move_after_turning(speed, desired_angle):
     for x in range(3):
         zumi.go_straight(speed, desired_angle)
 
+def finish_with_180_turn():
+    zumi.stop()
+    log_event("finish")
+    print("Reached end. Performing 180° turn.")
+    screen.draw_text_center("Finisher box\nTurning 180°")
+    zumi.turn_left(180)
+    screen.draw_text_center("Done!")
+
 zumi.mpu.calibrate_MPU()
 zumi.reset_gyro()
 desired_angle = zumi.read_z_angle() 
@@ -130,10 +140,17 @@ try:
 
         if object_detected():
             log_event('object_detected')
+            number_of_objects += 1
+            zumi.play_note(13, 500) # 13 is note type (1 - 60), 500 is duration in ms
+            screen.draw_text_center(f"Objects: {number_of_objects}") # Display object count on screen
+            # Wait until the object is removed
+            print("Waiting for object to be removed...")
             while object_detected():
                 zumi.stop()
                 time.sleep(0.1)
-            number_of_objects += 1
+            print("Object removed. Resuming movement.")
+            read_qr_code()
+            
 
         # Read all IR sensor values
         front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data()
@@ -179,6 +196,7 @@ try:
                     move_after_turning(speed, desired_angle)
                 else:
                     zumi.stop()
+                    finish_with_180_turn()
                     break
 finally:
     zumi.stop()
