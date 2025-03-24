@@ -1,1 +1,32 @@
+# we are already logging "end_line" when 
+# no line is detected, so we use this as
+# a trigger for the 180 turn in the finisher box
 
+from zumi.zumi import Zumi
+from zumi.util.screen import Screen  # Import screen module
+
+zumi = Zumi()
+screen = Screen()
+
+def finish_with_180_turn():
+    zumi.stop()
+    log_event("finish")
+    print("Reached end. Performing 180° turn.")
+    screen.draw_text_center("Finisher box\nTurning 180°")
+    zumi.turn_left(180)
+    screen.draw_text_center("Done!")
+
+# Update main loop so that if the end position is confirmed,
+# e.g. no line detected and it's the True end,
+# you call the finish_with_180_turn() function
+
+if bottom_left <= threshold and bottom_right <= threshold:
+    log_event("end_line")
+
+    # if this is the 2nd time in a row that "end_line" was
+    # logged quickly, then we are at the finisher box
+    if len(log["end_line"]) >= 2:
+        time_between = (log["end_line"][-1] - log["end_line"][-2]).total_seconds()
+        if time_between > 3:
+            finish_with_180_turn()
+            break # exit the loop
