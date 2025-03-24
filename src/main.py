@@ -56,17 +56,18 @@ def log_event(action):
     timestamp = datetime.now()
     log[action] = log.setdefault(action, [])
     log[action].append(timestamp)
-    print(log)
 
-def qr_code_command(message):
+def qr_code_command(message, number_of_objects):
     if message == "Left Circle":
-        for i in range(4):
-            zumi.turn_left(90)
-            zumi.line_follower(3)
+        for j in range(number_of_objects):
+            for i in range(4):
+                turn_to_check('left')
+                zumi.line_follower(3)
     elif message == "Right Circle":
-        for i in range(4):
-            zumi.turn_right(90)
-            zumi.line_follower(3)
+        for j in range(number_of_objects):
+            for i in range(4):
+                zumi.turn_right(90)
+                zumi.line_follower(3)
     elif message == "Turn Left":
         zumi.turn_left(90)
     elif message == "Turn Right":
@@ -82,13 +83,13 @@ def qr_code_command(message):
     else:
         print("Invalid command")
 
-def read_qr_code():
+def read_qr_code(number_of_objects):
     camera.start_camera()
     frame = camera.capture()
     camera.close()
     qr_code = vision.find_QR_code(frame)
     message = vision.get_QR_message(qr_code)
-    qr_code_command(message)
+    qr_code_command(message, number_of_objects)
     return message
 
 def line_correction(bottom_left, bottom_right, desired_angle, threshold):
@@ -177,7 +178,7 @@ try:
             log_event('object_removed')
             print("Object removed. Resuming movement.")
             log_event('qr_code_read')
-            message = read_qr_code()
+            message = read_qr_code(number_of_objects)
             log_event('qr_code_command: ' + message + " done")
             
 
@@ -206,7 +207,7 @@ try:
                 front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data()
             else:
                 go_left = False
-            if bottom_left > threshold and bottom_right > threshold and go_left:
+            if (bottom_left > threshold or bottom_right > threshold) and go_left:
                 log_event('move_left')
                 move_after_turning(speed, desired_angle)
             else:
@@ -220,7 +221,7 @@ try:
 
                 front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data()
 
-                if bottom_left > threshold and bottom_right > threshold:
+                if bottom_left > threshold or bottom_right > threshold:
                     log_event('move_right')
                     move_after_turning(speed, desired_angle)
                 else:
