@@ -5,6 +5,7 @@ from zumi.util.camera import Camera
 from zumi.personality import Personality
 from zumi.protocol import Note # Note allows Zumi to play notes (music)
 
+import pandas as pd
 import time
 from datetime import datetime
 
@@ -127,6 +128,30 @@ def finish_with_180_turn():
     zumi.turn_left(180)
     screen.draw_text_center("Done!")
 
+def save_dict_to_csv(data_dict):
+    # Generate file name with current time
+    current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
+    file_name = f"output_{current_time}.csv"
+
+    # Create empty list to store rows
+    rows = []
+
+    # Go through all actions and timestamps
+    for action, timestamps in data_dict.items():
+        for timestamp in timestamps:
+            # Add row to list of rows
+            rows.append({"timestamp": timestamp, "action": action})
+
+    # Create DataFrame from list of rows
+    df = pd.DataFrame(rows)
+
+    # Sort DataFrame by column timestamp
+    df = df.sort_values(by='timestamp')
+
+    # Save DataFrame in CSV file
+    df.to_csv(file_name, index=False)
+    print("Data saved in ", file_name)
+
 zumi.mpu.calibrate_MPU()
 zumi.reset_gyro()
 desired_angle = zumi.read_z_angle() 
@@ -201,6 +226,9 @@ try:
                 else:
                     zumi.stop()
                     finish_with_180_turn()
+                    log_event('stop')
                     break
 finally:
     zumi.stop()
+    log_event('stop')
+    save_dict_to_csv(log)
