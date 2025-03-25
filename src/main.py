@@ -190,7 +190,9 @@ try:
             log_event('object_detected')
             number_of_objects += 1
             zumi.play_note(13, 500) # 13 is note type (1 - 60), 500 is duration in ms
+            log_event('play_note')
             screen.draw_text_center("Objects: " + str(number_of_objects)) # Display object count on screen
+            log_event('display_object_count_on_screen')
             # Wait until the object is removed
             print("Waiting for object to be removed...")
             while object_detected():
