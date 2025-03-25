@@ -24,10 +24,10 @@ git pull origin $BRANCH
 # python3 src/check_start.py
 
 # Запускаємо перевірку коду
-python3 src/main.py
+# python3 src/main.py
 EOF
 
 # Load csv file
-# scp "$USER@$IP_ADDRESS:~/robot_challenge/result.csv" "./result_$(date +%Y-%m-%d_%H-%M).csv"
+scp "$USER@$IP_ADDRESS:$REMOTE_DIR/output.csv" "./result_$(date +%Y-%m-%d_%H-%M).csv"
 
 # echo "✅ CSV file successfully loaded (result.csv)."
