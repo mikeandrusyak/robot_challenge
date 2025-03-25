@@ -230,8 +230,9 @@ try:
                     move_after_turning(speed, desired_angle)
                 else:
                     zumi.stop()
-                    finish_with_180_turn()
                     log_event('stop')
+                    finish_with_180_turn()
+                    log_event('finish_with_180_turn')
                     break
 finally:
     zumi.stop()
