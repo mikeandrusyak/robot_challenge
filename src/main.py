@@ -35,9 +35,13 @@ def turning_correction(desired_angle, turn_angle):
 def turn_to_check(turn):
     zumi.reset_gyro()
     if turn == 'left':
+        zumi.signal_left_on()
         zumi.turn_left(90)
+        zumi.signal_left_off()
     elif turn == 'right':
+        zumi.signal_right_on()
         zumi.turn_right(180)
+        zumi.signal_right_off()
     time.sleep(0.01)
     desired_angle = zumi.read_z_angle()
     return desired_angle
