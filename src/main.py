@@ -151,7 +151,7 @@ def finish_with_180_turn():
 def save_dict_to_csv(data_dict):
     # Generate file name with current time
     current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
-    file_name = "output_" + current_time + ".csv"
+    file_name = "zumi7337_output_" + current_time + ".csv"
 
     # Create empty list to store rows
     rows = []
