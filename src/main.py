@@ -66,10 +66,14 @@ def circle(turn, speed, number_of_objects, threshold):
         for i in range(4):
             zumi.reset_gyro()
             if turn == 'left':
+                zumi.signal_left_on()
                 zumi.turn_left(90)
                 log_event('move_left')
+                zumi.signal_left_off()
             elif turn == 'right':
+                zumi.signal_right_on()
                 zumi.turn_right(90)
+                zumi.signal_right_off()
                 log_event('move_right')
             desired_angle = zumi.read_z_angle()
             desired_angle = turning_correction(desired_angle, 90)
@@ -88,9 +92,13 @@ def qr_code_command(message, speed, number_of_objects, threshold):
     elif message == "Right Circle":
         circle('right', speed, number_of_objects, threshold)
     elif message == "Turn Left":
+        zumi.signal_left_on()
         zumi.turn_left(90)
+        zumi.signal_left_off()
     elif message == "Turn Right":
+        zumi.signal_right_on()
         zumi.turn_right(90)
+        zumi.signal_right_off()
     elif message == "Stop":
         zumi.stop()
     elif message == "Zumi is happy today!":
@@ -128,9 +136,13 @@ def turning_correction(desired_angle, turn_angle):
 def turn_to_check(turn):
     zumi.reset_gyro()
     if turn == 'left':
+        zumi.signal_left_on()
         zumi.turn_left(90)
+        zumi.signal_left_off()
     elif turn == 'right':
+        zumi.signal_right_on()
         zumi.turn_right(180)
+        zumi.signal_right_off()
     time.sleep(0.01)
     desired_angle = zumi.read_z_angle()
     return desired_angle
@@ -145,7 +157,9 @@ def finish_with_180_turn():
     log_event("finish")
     print("Reached end. Performing 180° turn.")
     screen.draw_text_center("Finisher box\nTurning 180°")
+    zumi.signal_left_on()
     zumi.turn_left(180)
+    zumi.signal_left_off()
     screen.draw_text_center("Done!")
 
 def save_dict_to_csv(data_dict):
