@@ -210,7 +210,7 @@ try:
             print("Waiting for object to be removed...")
             while object_detected():
                 zumi.stop()
-                time.sleep(0.1)
+                time.sleep(5) # increased from 0.1 to 5 seconds to avoid double counting of objects
             log_event('object_removed')
             print("Object removed. Resuming movement.")
             log_event('qr_code_read')
