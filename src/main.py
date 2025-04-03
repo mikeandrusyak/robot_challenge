@@ -110,7 +110,7 @@ def qr_code_command(message, speed, number_of_objects, threshold):
         personality.angry()
     elif message == "Zumi is celebrating today!":
         personality.celebrate()
-    elif message == "Take picture":
+    elif message == "Take Picture":
         face_detection()
     else:
         print("Invalid command")
