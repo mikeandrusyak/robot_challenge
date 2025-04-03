@@ -80,7 +80,18 @@ def circle(turn, speed, number_of_objects, threshold):
                 desired_angle = line_correction(bottom_left, bottom_right, desired_angle, threshold)
                 zumi.go_straight(speed, desired_angle)
             
-            
+def face_detection():
+    camera.start_camera()
+    captured_picture = camera.capture()
+    camera.close()
+    captured_picture = vision.convert_to_gray(captured_picture)
+    screen.show_image(captured_picture)
+    if vision.find_face(captured_picture):
+        screen.draw_text_center("Face Detected!")
+        zumi.play_note(40, 500)
+    else:
+        screen.draw_text_center("No Face Detected!")    
+    time.sleep(1)             
 
 def qr_code_command(message, speed, number_of_objects, threshold):
     if message == "Left Circle":
@@ -99,6 +110,8 @@ def qr_code_command(message, speed, number_of_objects, threshold):
         personality.angry()
     elif message == "Zumi is celebrating today!":
         personality.celebrate()
+    elif message == "Take picture":
+        face_detection()
     else:
         print("Invalid command")
 
