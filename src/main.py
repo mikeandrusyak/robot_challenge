@@ -88,14 +88,13 @@ def face_detection():
     camera.start_camera()
     captured_picture = camera.capture()
     camera.close()
-    captured_picture = vision.convert_to_gray(captured_picture)
-    screen.show_image(captured_picture)
+    # screen.show_image(captured_picture) #used to check whether the picture of the face was in frame of the captured picture
     if vision.find_face(captured_picture):
         screen.draw_text_center("Face Detected!")
         zumi.play_note(40, 500)
     else:
         screen.draw_text_center("No Face Detected!")    
-    time.sleep(1)             
+    time.sleep(1)              
 
 def qr_code_command(message, speed, number_of_objects, threshold):
     if message == "Left Circle":
