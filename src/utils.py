@@ -1,10 +1,9 @@
 from zumi.zumi import Zumi
-from zumi.util.screen import Screen
 from datetime import datetime
 import pandas as pd
 
+# Initialize global objects
 zumi =    Zumi()
-screen    = Screen()
 
 def object_detected(threshold=100):
     front_right, bottom_right, back_right, bottom_left, back_left, front_left = zumi.get_all_IR_data() # Get center IR sensor value

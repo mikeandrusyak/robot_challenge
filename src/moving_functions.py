@@ -1,9 +1,12 @@
 from zumi.zumi import Zumi
+from zumi.util.screen import Screen
 import time
 import pandas as pd
 import utils
 
+# Initialize global objects
 zumi = Zumi()
+screen = Screen()
 
 def line_correction(bottom_left, bottom_right, desired_angle, threshold):
     if bottom_left > threshold and bottom_right < threshold:
@@ -19,7 +22,7 @@ def turning_correction(desired_angle, turn_angle):
         desired_angle = abs(turn_angle-abs(desired_angle))
     return desired_angle
 
-def turn_to_check(zumi, turn):
+def turn_to_check(turn):
     zumi.reset_gyro()
     if turn == 'left':
         zumi.signal_left_on()
@@ -33,12 +36,12 @@ def turn_to_check(zumi, turn):
     desired_angle = zumi.read_z_angle()
     return desired_angle
 
-def move_after_turning(zumi, speed, desired_angle):
+def move_after_turning(speed, desired_angle):
     zumi.reset_gyro() 
     for x in range(3):
         zumi.go_straight(speed, desired_angle)
 
-def circle(zumi, log, turn, speed, number_of_objects, threshold):
+def circle(log, turn, speed, number_of_objects, threshold):
     for j in range(number_of_objects):
         for i in range(4):
             zumi.reset_gyro()
@@ -63,12 +66,12 @@ def circle(zumi, log, turn, speed, number_of_objects, threshold):
     return log
 
 
-def move_after_turning(zumi, speed, desired_angle):
+def move_after_turning(speed, desired_angle):
     zumi.reset_gyro() 
     for x in range(3):
         zumi.go_straight(speed, desired_angle)
 
-def finish_with_180_turn(zumi, log, screen):
+def finish_with_180_turn(log, screen):
     zumi.stop()
     log = utils.log_event(log, "finish")
     print("Reached end. Performing 180° turn.")
