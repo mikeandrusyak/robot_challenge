@@ -6,7 +6,7 @@ from zumi.util.vision import Vision
 from zumi.util.camera import Camera 
 from zumi.personality import Personality
 import cv2
-import moving_functions as mf
+import moving_functions as move_f
 
 
 zumi =    Zumi()
@@ -34,11 +34,11 @@ def face_detection(zumi, camera, screen, vision):
         return None   
     time.sleep(1)
 
-def qr_code_command(zumi, personality, message, speed, number_of_objects, threshold):
+def qr_code_command(zumi, log, personality, message, speed, number_of_objects, threshold):
     if message == "Left Circle":
-        mf.circle('left', speed, number_of_objects, threshold)
+        log = move_f.circle(zumi, log, 'left', speed, number_of_objects, threshold)
     elif message == "Right Circle":
-        mf.circle('right', speed, number_of_objects, threshold)
+        log = move_f.circle(zumi, log, 'right', speed, number_of_objects, threshold)
     elif message == "Turn Left":
         zumi.signal_left_on()
         zumi.turn_left(90)
@@ -57,13 +57,14 @@ def qr_code_command(zumi, personality, message, speed, number_of_objects, thresh
         personality.celebrate()
     else:
         print("Invalid command")
+    return log
 
-def read_qr_code(camera, screen, vision, speed, number_of_objects, threshold):
+def read_qr_code(zumi, log, personality, camera, screen, vision, speed, number_of_objects, threshold):
     camera.start_camera()
     frame = camera.capture()
     screen.show_image(frame) #to make sure qr-code is in frame of picture
     camera.close()
     qr_code = vision.find_QR_code(frame)
     message = vision.get_QR_message(qr_code)
-    qr_code_command(message, speed, number_of_objects, threshold)
-    return message
+    log = qr_code_command(zumi, log, personality, message, speed, number_of_objects, threshold)
+    return message, log

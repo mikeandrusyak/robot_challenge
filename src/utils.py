@@ -17,15 +17,6 @@ def log_event(log, action):
     log[action].append(timestamp)
     return log
 
-def finish_with_180_turn(zumi, log, screen):
-    zumi.stop()
-    log = log_event("finish")
-    print("Reached end. Performing 180° turn.")
-    screen.draw_text_center("Finisher box\nTurning 180°")
-    zumi.turn_left(180)
-    screen.draw_text_center("Done!")
-    return log
-
 def save_dict_to_csv(data_dict):
     # Generate file name with current time
     current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
