@@ -45,7 +45,7 @@ Zumi-Project/
 
 ## Team (in alphabetical order)
 Lea Schönauer
-Markus Barten
+Markus Barten (until 27 May 25)
 Mykhailo Andrusiak
 Simone Wullschleger
 
