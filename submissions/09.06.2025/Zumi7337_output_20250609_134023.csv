@@ -1,0 +1,65 @@
+action,timestamp
+start,2025-06-09 13:37:43.849682
+end_line,2025-06-09 13:37:43.850720
+starting_course,2025-06-09 13:37:44.854432
+end_line,2025-06-09 13:37:57.980313
+check_left,2025-06-09 13:37:57.980610
+check_right,2025-06-09 13:37:59.091744
+move_right,2025-06-09 13:38:00.211131
+move_after_turning_right,2025-06-09 13:38:00.211415
+object_detected,2025-06-09 13:38:02.740207
+object_removed,2025-06-09 13:38:03.210071
+object_count: 1,2025-06-09 13:38:03.210290
+loking for qr_code of face,2025-06-09 13:38:03.214740
+face_detected,2025-06-09 13:38:07.406040
+face_count: 1,2025-06-09 13:38:07.442965
+continue_moving_after_object,2025-06-09 13:38:07.948492
+end_line,2025-06-09 13:38:23.984882
+check_left,2025-06-09 13:38:23.985131
+check_right,2025-06-09 13:38:25.084550
+move_right,2025-06-09 13:38:26.194012
+move_after_turning_right,2025-06-09 13:38:26.194260
+object_detected,2025-06-09 13:38:37.278065
+object_removed,2025-06-09 13:38:37.850329
+object_count: 2,2025-06-09 13:38:37.850554
+loking for qr_code of face,2025-06-09 13:38:37.851686
+qr_code_command:Right Circle,2025-06-09 13:38:44.132854
+start right circle,2025-06-09 13:38:44.139169
+move_right,2025-06-09 13:38:46.089217
+move_right,2025-06-09 13:38:49.549266
+move_right,2025-06-09 13:38:53.588647
+move_right,2025-06-09 13:38:57.436811
+finish right circle,2025-06-09 13:39:00.271534
+qr_code_command:Right Circledone,2025-06-09 13:39:00.271866
+continue_moving_after_object,2025-06-09 13:39:00.781716
+move_after_turning_left,2025-06-09 13:39:00.781716
+end_line,2025-06-09 13:39:00.805464
+check_left,2025-06-09 13:39:03.824105
+move_left,2025-06-09 13:39:04.932968
+move_after_turning_left,2025-06-09 13:39:04.933220
+end_line,2025-06-09 13:39:29.928188
+check_left,2025-06-09 13:39:29.928450
+move_left,2025-06-09 13:39:31.023146
+move_after_turning_left,2025-06-09 13:39:31.023399
+object_detected,2025-06-09 13:39:36.569899
+object_removed,2025-06-09 13:39:37.225709
+object_count: 3,2025-06-09 13:39:37.225931
+loking for qr_code of face,2025-06-09 13:39:37.227110
+qr_code_command:2 x 360 left emotion: angry,2025-06-09 13:39:39.095559
+again_on_line,2025-06-09 13:39:46.395566
+out_of_line,2025-06-09 13:39:46.821513
+qr_code_command:2 x 360 left emotion: angrydone,2025-06-09 13:39:55.784286
+continue_moving_after_object,2025-06-09 13:39:56.292394
+object_detected,2025-06-09 13:39:56.896119
+object_removed,2025-06-09 13:39:57.323544
+object_count: 4,2025-06-09 13:39:57.323832
+loking for qr_code of face,2025-06-09 13:39:57.328196
+qr_code_command:Zumi is celebrating today!,2025-06-09 13:39:59.201430
+qr_code_command:Zumi is celebrating today!done,2025-06-09 13:40:02.288739
+continue_moving_after_object,2025-06-09 13:40:02.791055
+stop,2025-06-09 13:40:02.802646
+finish,2025-06-09 13:40:02.814350
+finish_with_180_turn,2025-06-09 13:40:04.456325
+stop,2025-06-09 13:40:04.467380
+total_manhattan_distance: 36,2025-06-09 13:40:04.945090
+run_time: 0:02:20.617698,2025-06-09 13:40:04.467380
