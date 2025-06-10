@@ -35,6 +35,8 @@ Zumi-Project/
   - `zumi` *(included in Zumi's development environment)*
   - `opencv-python`
   - `pandas`
+  - `numpy`
+  - `matplotlib`
 - Jupyter Notebook
 
 ## Running the code
