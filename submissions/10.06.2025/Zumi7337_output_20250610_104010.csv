@@ -1,0 +1,89 @@
+action,timestamp
+start,2025-06-10 10:37:27.775535
+end_line,2025-06-10 10:37:27.776606
+starting_course,2025-06-10 10:37:28.780156
+end_line,2025-06-10 10:37:31.211533
+check_left,2025-06-10 10:37:31.211943
+check_right,2025-06-10 10:37:32.311870
+move_right,2025-06-10 10:37:33.405657
+move_after_turning_right,2025-06-10 10:37:33.405867
+object_detected,2025-06-10 10:37:35.009863
+Object detected!,2025-06-10 10:37:35.284975
+object_removed,2025-06-10 10:37:35.693049
+loking for qr_code of face,2025-06-10 10:37:35.694410
+face_detected,2025-06-10 10:37:41.526486
+face_count: 1,2025-06-10 10:37:41.538869
+continue_moving_after_object,2025-06-10 10:37:42.044353
+end_line,2025-06-10 10:37:52.897415
+check_left,2025-06-10 10:37:52.897676
+check_right,2025-06-10 10:37:53.983271
+move_right,2025-06-10 10:37:55.095588
+move_after_turning_right,2025-06-10 10:37:55.095842
+object_detected,2025-06-10 10:37:59.002564
+Object detected!,2025-06-10 10:37:59.268518
+object_removed,2025-06-10 10:37:59.924597
+loking for qr_code of face,2025-06-10 10:37:59.931608
+continue_moving_after_object,2025-06-10 10:38:08.462815
+object_detected,2025-06-10 10:38:11.420927
+Object detected!,2025-06-10 10:38:11.702260
+object_removed,2025-06-10 10:38:12.111733
+loking for qr_code of face,2025-06-10 10:38:12.112925
+qr_code_command: Right Circle,2025-06-10 10:38:13.967831
+start right circle,2025-06-10 10:38:13.976738
+2 circles,2025-06-10 10:38:13.977041
+move_right,2025-06-10 10:38:15.345427
+-90.055degree z_angle,2025-06-10 10:38:15.362923
+move_right,2025-06-10 10:38:18.157227
+1.2349999999999994degree z_angle,2025-06-10 10:38:18.174652
+move_right,2025-06-10 10:38:22.342789
+91.386degree z_angle,2025-06-10 10:38:22.360197
+move_right,2025-06-10 10:38:26.652574
+180.811degree z_angle,2025-06-10 10:38:26.669922
+move_right,2025-06-10 10:38:29.837274
+-88.971degree z_angle,2025-06-10 10:38:29.854702
+move_right,2025-06-10 10:38:33.197067
+-0.013999999999995794degree z_angle,2025-06-10 10:38:33.208469
+move_right,2025-06-10 10:38:37.080664
+89.961degree z_angle,2025-06-10 10:38:37.098002
+move_right,2025-06-10 10:38:40.345544
+179.715degree z_angle,2025-06-10 10:38:40.362945
+finish right circle,2025-06-10 10:38:41.773013
+move_after_turning_left,2025-06-10 10:38:41.773286
+qr_code_command: Right Circle done,2025-06-10 10:38:41.773516
+continue_moving_after_object,2025-06-10 10:38:42.281484
+end_line,2025-06-10 10:38:42.303548
+check_left,2025-06-10 10:38:45.318116
+move_left,2025-06-10 10:38:46.426698
+move_after_turning_left,2025-06-10 10:38:46.426958
+end_line,2025-06-10 10:38:54.236786
+check_left,2025-06-10 10:38:54.237048
+move_left,2025-06-10 10:38:55.340944
+move_after_turning_left,2025-06-10 10:38:55.341200
+end_line,2025-06-10 10:39:04.261070
+check_left,2025-06-10 10:39:04.261325
+move_left,2025-06-10 10:39:05.373062
+move_after_turning_left,2025-06-10 10:39:05.373316
+object_detected,2025-06-10 10:39:11.626336
+Object detected!,2025-06-10 10:39:11.911425
+object_removed,2025-06-10 10:39:12.566775
+loking for qr_code of face,2025-06-10 10:39:12.573692
+"qr_code_command: 2 x 360 left, emotion: celebrating",2025-06-10 10:39:15.967964
+celebrating emotion spin,2025-06-10 10:39:19.042346
+start spinning,2025-06-10 10:39:19.056743
+again_on_line,2025-06-10 10:39:25.082876
+out_of_line,2025-06-10 10:39:25.635206
+"qr_code_command: 2 x 360 left, emotion: celebrating done",2025-06-10 10:39:35.883944
+continue_moving_after_object,2025-06-10 10:39:36.392089
+object_detected,2025-06-10 10:39:39.122313
+Object detected!,2025-06-10 10:39:39.405245
+object_removed,2025-06-10 10:39:39.445223
+loking for qr_code of face,2025-06-10 10:39:39.448007
+qr_code_command: Zumi is happy today!,2025-06-10 10:39:44.294462
+qr_code_command: Zumi is happy today! done,2025-06-10 10:39:46.525018
+continue_moving_after_object,2025-06-10 10:39:47.029105
+object_count: 5,2025-06-10 10:39:47.029553
+finish,2025-06-10 10:39:47.464080
+finish_with_180_turn,2025-06-10 10:39:49.082837
+stop,2025-06-10 10:39:49.093874
+total_manhattan_distance: 63,2025-06-10 10:39:49.525352
+run_time: 0:02:21.318339,2025-06-10 10:39:49.093874
