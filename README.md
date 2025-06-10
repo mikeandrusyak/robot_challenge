@@ -10,7 +10,7 @@ Zumi is programmed to:
 - Log all events with timestamps
 - Save all activities in a `.csv` file
 
-The logic is implemented in `src/main.jupyter.ipynb`.
+The logic is implemented in `src/main_jupyter.ipynb`.
 
 ## Features
 - **Line Following**: IR-based correction to stay on a black line
