@@ -52,7 +52,7 @@ Mykhailo Andrusiak
 Simone Wullschleger
 
 ## Acknowledgments
-Subject matter experts: Susanne Suter and Yves Bächtiger
+Subject matter experts: Susanne Suter, Yves Bächtiger and Brandon Panos
 
 Robolink Zumi Documentation
 https://docs.robolink.com/docs/Zumi/Python/Function-Documentation
