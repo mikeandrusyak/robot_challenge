@@ -20,12 +20,15 @@ The logic is implemented in `src/main_jupyter.ipynb`.
 - **360° Dance + Emotion**: Turns with personality animations
 - **Navigation Logic**: Handles forks and end-of-line cases
 - **Data Logging**: All events are logged with timestamps and saved to a CSV file
+- **Manhattan Distance**: Map of the course using Manhattan distance
 
 ## 📁 Project Structure
 Zumi-Project/
+├── documents/                  # The teams reflections and Student Defined Tasks
 ├── src/
 │   └── main.jupyter.ipynb      # Main notebook containing all logic
-├── submissions/                # Output CSV logs and final results
+│   └── main.jupyter.html       # Main notebook in html
+├── submissions/                # Output CSV logs, photos taken by Zumi and Manhattan distance map
 ├── old experiments/            # Archived earlier versions and prototypes
 └── README.md                   # Project overview and instructions
 
